@@ -1,26 +1,18 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
-// import Axios from 'axios'
+import Axios from 'axios'
 Vue.use(Vuex)
+
+const questionUrl = 'http://localhost:3000/questions'
+// const userUrl = 'http://localhost:3000/users'
+const answerUrl = 'http://localhost:3000/answers'
 
 const store = new Vuex.Store({
   state: {
-    questions: [{
-      _id: 1,
-      title: 'How to be a great man?',
-      detail: 'How to be a very very great man'
-    }, {
-      _id: 2,
-      title: 'How to be a great woman?',
-      detail: 'How to be a very very great woman'
-    }, {
-      _id: 3,
-      title: 'How to be a great boy?',
-      detail: 'How to be a very very great boy'
-    }],
-    user: {
-      name: 'Adhiarta'
-    }
+    questions: null,
+    user: null,
+    answers: null,
+    token: null
   },
   getters: {
     getData (state) {
@@ -29,16 +21,39 @@ const store = new Vuex.Store({
   },
   mutations: {
     question (state, payload) {
-      state.question = payload
+      state.questions = payload
+    },
+    answer (state, payload) {
+      state.answers = payload
+    },
+    token (state, payload) {
+      state.token = payload
     }
   },
   actions: {
-    // getQuestion (context) {
-    //   let url = 'https://opentdb.com/api.php?amount=10&difficulty=easy&type=boolean'
-    //   Axios.get(url).then(({data}) => {
-    //     context.commit('question', data)
-    //   })
-    // }
+    getQuestion (context) {
+      Axios.get(questionUrl).then(({data}) => {
+        console.log(data)
+        context.commit('question', data.questions)
+      })
+    },
+    getAnswer (context) {
+      Axios.get(answerUrl).then(({data}) => {
+        console.log(data)
+        context.commit('answer', data.answers)
+      })
+    },
+    signin: function (context, payload) {
+      let url = 'http://localhost:3000/users/signin'
+      Axios.post(url, {
+        email: payload.email,
+        password: payload.password
+      })
+        .then(({data}) => {
+          console.log(data)
+          context.commit('token', data)
+        })
+    }
   }
 })
 

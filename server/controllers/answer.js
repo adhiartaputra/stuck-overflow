@@ -6,6 +6,8 @@ module.exports = {
   getAll: (req, res) => {
     Answer.find()
     .populate('questionId')
+    .populate('userId')
+    .exec()
       .then(answers => res.status(200).send({
         msg: 'get all answer success',
         answers
@@ -16,7 +18,7 @@ module.exports = {
   create: (req, res) => {
     Answer.create({
       answer: req.body.answer,
-      userId: req.headers.userId,
+      userId: req.headers.id,
       questionId: req.params.questionId
     })
       .then(answerCreate => res.status(200).send({

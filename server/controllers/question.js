@@ -6,9 +6,11 @@ module.exports = {
   getAll: (req, res) => {
     Question.find()
     .populate('userId')
+    .exec()
       .then(questions => {
         Answer.find()
         .populate('userId')
+        .exec()
           .then(answers => {
             let arrQuestions = []
             questions.forEach(q => {
@@ -50,6 +52,7 @@ module.exports = {
     Question.findOne({
       '_id': req.params.id
     })
+    .exec()
     .then(question => {
       if (question.votes.length > 0) {
         let findVoter = question.votes.filter(q => {
@@ -78,12 +81,13 @@ module.exports = {
   },
 
   getById: (req, res) => {
-    Question.find({
-      'userId': req.headers.id
+    Question.findOne({
+      '_id': req.params.id
     })
-      .then(questions => res.status(200).send({
-        msg: 'get question profile succeed',
-        questions
+    .exec()
+      .then(question => res.status(200).send({
+        msg: 'get question succeed',
+        question
       }))
       .catch(err => res.status(500).send(err))
   },
@@ -95,6 +99,7 @@ module.exports = {
       title: req.body.title,
       question: req.body.question
     })
+    .exec()
       .then(isEdit => {
         Question.findOne({
           '_id': req.params.id

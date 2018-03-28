@@ -5,7 +5,7 @@
       User Info
     </div>
     <div class="card-body">
-      <h5 class="card-title">Hello {{user.name}},</h5>
+      <h5 class="card-title">Hey, {{user}}</h5>
       <p class="card-text">Welcome to the place where you can find every answer for your question</p>
       <router-link :to="{name: 'postForm'}"> <button class="btn btn-primary">Ask Something?</button></router-link>
     </div>
@@ -18,18 +18,12 @@ export default {
   name: 'user_info',
   data () {
     return {
-      user: ''
+      user: localStorage.getItem('name')
     }
   },
   created () {
-    this.getUser()
   },
-  methods: {
-    getUser () {
-      this.user = this.$store.state.user
-      return this.$store.getters.getData
-    }
-  }
+  methods: {}
 }
 </script>
 

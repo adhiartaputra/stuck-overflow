@@ -10,7 +10,9 @@ require('dotenv').config()
 
 const mongoose = require('mongoose')
 const db = mongoose.connection
-const dbUrl = 'mongodb://localhost:27017/overflow'
+const pass = process.env.SECRET
+const dbLocal = 'mongodb://localhost:27017/overflow'
+const dbUrl = `mongodb://just-to-do-it:${pass}@just-to-do-it-shard-00-00-grhoo.mongodb.net:27017,just-to-do-it-shard-00-01-grhoo.mongodb.net:27017,just-to-do-it-shard-00-02-grhoo.mongodb.net:27017/test?ssl=true&replicaSet=just-to-do-it-shard-0&authSource=admin`
 
 mongoose.connect(dbUrl, (err => {
   if (err) {

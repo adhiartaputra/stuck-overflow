@@ -40,7 +40,7 @@ import Question from '@/components/Question'
 import UserInfo from '@/components/UserInfo'
 
 export default {
-  name: 'HelloWorld',
+  name: 'Home',
   components: {
     Navbar,
     Question,
@@ -54,22 +54,14 @@ export default {
     }
   },
   created () {
-    this.getData()
     this.getQuestions()
+    this.getData()
   },
   methods: {
     getData () {
-      this.data = this.$store.getters.getData
+      this.data = this.$store.state.questions
+      // this.data = this.$store.getters.getData
       return this.$store.getters.getData
-    },
-    getAnswer () {
-      this.$store.dispatch('getAnswer')
-    },
-    addCount () {
-      this.$store.commit('increment')
-    },
-    postArticle () {
-      this.$store.dispatch('postBlog', this.input)
     },
     getQuestions () {
       this.$store.dispatch('getQuestion')

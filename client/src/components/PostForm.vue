@@ -9,7 +9,6 @@
             Need an answer?
           </div>
           <div class="card-body">
-            <form>
               <div class="form-group">
                 <label for="title" class="col-form-label">Title:</label>
                 <input type="text" class="form-control" id="title" v-model='title' required>
@@ -18,8 +17,7 @@
                 <label for="content" class="col-form-label">Description:</label>
                 <textarea class="form-control" id="description" v-model='description' required></textarea>
               </div>
-            </form>
-            <button class="btn btn-primary">Post</button>
+            <button class="btn btn-primary" @click="askQuestion">Post</button>
           </div>
         </div>
       </div>
@@ -30,14 +28,43 @@
 
 <script>
 import Navbar from '@/components/Navbar'
+import axios from 'axios'
 export default {
   name: 'post',
   components: {
     Navbar
+  },
+  data () {
+    return {
+      title: '',
+      description: ''
+    }
+  },
+  methods: {
+    askQuestion: function () {
+      let url = 'http://localhost:3000/questions/add'
+      axios({
+        method: 'post',
+        url: url,
+        data: {
+          title: this.title,
+          description: this.description
+        },
+        headers: {
+          id: localStorage.getItem('userId')
+        }
+      }).then(data => {
+        console.log(data)
+        this.$router.push('/')
+      })
+    }
   }
 }
 </script>
 
 <style>
-
+.card-body
+{
+  text-align: left;
+}
 </style>

@@ -20,12 +20,15 @@ module.exports = {
       email: req.body.email
     })
       .then(user => {
+        console.log(user)
         if (user) {
           if (user.password === req.body.password) {
             jwt.sign({data: user}, process.env.SECRET, (err, token) => {
               res.status(200).send({
                 msg: 'login success',
-                token
+                token: token,
+                userId: user._id,
+                name: user.name
               })
             })
           } else {
