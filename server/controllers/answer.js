@@ -1,5 +1,5 @@
 'use strict'
-const Answer = require('../models/Answer')
+const Answer = require('../models/answer')
 
 module.exports = {
 

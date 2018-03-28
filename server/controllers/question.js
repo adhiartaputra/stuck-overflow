@@ -1,5 +1,5 @@
-const Question = require('../models/Question')
-const Answer = require('../models/Answer')
+const Question = require('../models/question')
+const Answer = require('../models/answer')
 
 module.exports = {
 
